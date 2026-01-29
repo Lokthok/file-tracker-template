@@ -109,10 +109,10 @@ file-tracker-template/
 ├── 00-archive/                 # Main directory to track
 ├── 10-active/                  # Currently working on
 ├── 20-completed/               # Finished items
-├── track_material.py           # Main tracking script
-├── material_inventory.json     # Auto-generated file database
+├── 10-progress-tracker.md      # Manual notes, todos, reflections (optional)
 ├── 00-scan-report.md           # Auto-generated changelog report
-└── 10-progress-tracker.md      # Manual notes, todos, reflections (optional)
+├── material_inventory.json     # Auto-generated file database
+└── track_material.py           # Main tracking script
 ```
 
 **Naming Convention Notes:**
