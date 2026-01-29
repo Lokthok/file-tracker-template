@@ -321,7 +321,7 @@ See [LICENSE](LICENSE) for full details.
 
 ## Author
 
-**[Your Name]** – Currently in vocational retraining for software development
+**René Hinterkörner** – Currently in vocational retraining for software development
 
 *This project demonstrates modern development practices: using AI tools effectively while maintaining code understanding, focusing on problem-solving over manual labor, and sharing solutions that might help others.*
 
