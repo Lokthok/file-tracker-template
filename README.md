@@ -33,7 +33,7 @@ A lightweight Python script that:
 ## Quick Start
 
 1. **Clone or use this template**
-   ```bash
+```bash
    git clone https://github.com/yourusername/file-tracker-template.git
    cd file-tracker-template
 ```
@@ -328,3 +328,12 @@ See [LICENSE](LICENSE) for full details.
 ## Acknowledgments
 
 Developed with AI assistance from Perplexity AI. The problem identification, system architecture, testing, and quality assurance were human-driven. The implementation benefited from AI-accelerated development.
+
+## Future Ideas
+
+Considering for future versions:
+- Configuration file support (YAML/JSON)
+- Ignore patterns for files/folders
+- Statistics and upload rhythm analysis
+
+Feedback and suggestions welcome via issues!
