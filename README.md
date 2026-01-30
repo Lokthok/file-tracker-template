@@ -45,7 +45,7 @@ A lightweight Python script that:
 3. **Edit configuration** in `track_material.py`
 
 ```python
-ARCHIVEDIR = BASEDIR / "00-archive"  # Change to your target folder
+ARCHIVE_DIR = BASE_DIR / "00-archive"  # Change to your target folder
 ```
 
 4. **Run the tracker**
