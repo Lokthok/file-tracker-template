@@ -35,7 +35,7 @@ A lightweight Python script that:
 
 1. **Clone or use this template**
 ```bash
-   git clone https://github.com/Lokthok/file-tracker-template.git
+   git clone https://github.com/lokthok/file-tracker-template.git
    cd file-tracker-template
 ```
 
