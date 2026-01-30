@@ -23,6 +23,7 @@ Traditional solutions require rigid organization or manual file naming. This tem
 A lightweight Python script that:
 - ✅ Scans directories recursively and tracks all files
 - ✅ Maintains a JSON-based inventory with timestamps
+- ✅ **Detects changes via content hash (MD5) – reliable even with cloud sync services**
 - ✅ Generates changelog-style Markdown reports (newest first)
 - ✅ Groups changes by day – one entry per scan session
 - ✅ Detects new, modified, and deleted files automatically
@@ -34,7 +35,7 @@ A lightweight Python script that:
 
 1. **Clone or use this template**
 ```bash
-   git clone https://github.com/yourusername/file-tracker-template.git
+   git clone https://github.com/Lokthok/file-tracker-template.git
    cd file-tracker-template
 ```
 
@@ -45,7 +46,7 @@ A lightweight Python script that:
 3. **Edit configuration** in `track_material.py`
 
 ```python
-ARCHIVEDIR = BASEDIR / "00-archive"  # Change to your target folder
+ARCHIVE_DIR = BASE_DIR / "00-archive"  # Change to your target folder
 ```
 
 4. **Run the tracker**
@@ -70,6 +71,7 @@ This template adapts to many scenarios:
 - Archive completed modules without losing history
 - Share clean, unmodified materials with classmates easily
 - Never accidentally distribute your solved assignments or notes
+- **Works reliably with OneDrive/Teams sync** – hash-based change detection
 
 **Workflow:** Download → Track with script → Copy to `10-active/` → Work on copies → Archive when done. Your `00-archive/` stays pristine for backups or sharing.
 
@@ -97,7 +99,7 @@ This template adapts to many scenarios:
 ### 💾 Backup Verification
 
 - Verify backup completeness
-- Detect file corruption (via size/modification changes)
+- Detect file corruption (via content hash)
 - Document backup history automatically
 - **...or invent your own use case – let your creativity run wild!**
 
@@ -112,7 +114,8 @@ file-tracker-template/
 ├── 00-scan-report.md           # Auto-generated changelog report
 ├── 10-progress-tracker.md      # Manual notes, todos, reflections (optional)
 ├── material_inventory.json     # Auto-generated file database
-└── track_material.py           # Main tracking script
+├── track_material.py           # Main tracking script
+└── CHANGELOG.md                # Version history
 ```
 
 **Naming Convention Notes:**
@@ -136,18 +139,30 @@ The script ignores it – it's purely for human use. Think of it as your project
 ## How It Works
 
 1. **Scanning**: Recursively walks `00-archive/` and catalogs all files
-2. **Comparison**: Compares current scan against `material_inventory.json`
-3. **Detection**: Identifies new, modified (size/date changed), and deleted files
-4. **Reporting**: Generates/updates `00-scan-report.md` with today's changes
-5. **History**: Maintains changelog – one entry per day, newest first
-6. **Progress Tracking** (optional): Use `10-progress-tracker.md` to manually document your sorting progress, todos, notes, or learning reflections
+2. **Hashing**: Computes MD5 hash of each file's content (fast, reliable)
+3. **Comparison**: Compares current scan against `material_inventory.json`
+4. **Detection**: Identifies new, modified (content changed), and deleted files
+5. **Reporting**: Generates/updates `00-scan-report.md` with today's changes
+6. **History**: Maintains changelog – one entry per day, newest first
+7. **Progress Tracking** (optional): Use `10-progress-tracker.md` to manually document your sorting progress, todos, notes, or learning reflections
 
 **What We Track Per File:**
 
 - `added`: When you first ran the script and it found this file
 - `size`: File size in bytes
-- `modified`: File system's "last modified" timestamp
-- `changed`: When we detected the file had changed (size or timestamp different)
+- `modified`: File system's "last modified" timestamp (informational only)
+- `hash`: MD5 hash of file content (used for change detection)
+- `changed`: When we detected the file content had changed
+
+**Why Hash-Based Detection?**
+
+Traditional file tracking relies on modification timestamps (`mtime`), which can be unreliable with:
+- Cloud sync services (OneDrive, Dropbox, Google Drive)
+- Re-downloads from shared folders (Teams, SharePoint)
+- File transfers across devices
+- Archive extraction
+
+**Content hashing solves this** by comparing what's actually *inside* the file, not when it was last touched. If you re-download an identical file, the tracker correctly recognizes it hasn't changed.
 
 **Smart Changelog:**
 
@@ -225,10 +240,9 @@ ARCHIVE_DIR = BASE_DIR / "your-folder-name"
 Edit lines 16-17:
 
 ```python
-INVENTORYFILE = BASEDIR / "your-inventory.json"
-REPORTFILE = BASEDIR / "your-report.md"
+INVENTORY_FILE = BASE_DIR / "your-inventory.json"
+REPORT_FILE = BASE_DIR / "your-report.md"
 ```
-
 
 ### Modify Folder Structure
 
